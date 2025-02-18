@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FromTo</string>
+    <string name="translate_from">Translate from</string>
+    <string name="translate_to">Translate to</string>
+    <string name="search">Search</string>
+    <string name="swap">Swap</string>
+    <string name="close">Close</string>
+</resources>
