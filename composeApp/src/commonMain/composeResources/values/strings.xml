@@ -5,4 +5,7 @@
     <string name="search">Search</string>
     <string name="swap">Swap</string>
     <string name="close">Close</string>
+    <string name="copy">Copy</string>
+    <string name="enter_text">Enter text</string>
+    <string name="new_translation">New translation</string>
 </resources>

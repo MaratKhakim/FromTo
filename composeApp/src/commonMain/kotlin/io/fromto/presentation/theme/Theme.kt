@@ -13,8 +13,8 @@ val LightColorScheme = lightColorScheme(
     primaryContainer = Color(0xFFBB86FC),
     onPrimaryContainer = Color(0xFF3700B3),
 
-    secondary = Color(0xFF03DAC6),
-    onSecondary = Color(0xFF000000),
+    secondary = Color(0xFF018786),
+    onSecondary = Color(0xFFFFFFFF),
     secondaryContainer = Color(0xFF018786),
     onSecondaryContainer = Color(0xFFFFFFFF),
 

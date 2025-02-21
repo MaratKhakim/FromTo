@@ -11,4 +11,6 @@ object Dimens {
     val ButtonHeight: Dp = 48.dp
     val IconSize = 24.dp
     val TouchTargetSize = 32.dp
+
+    val Elevation = 4.dp
 }
