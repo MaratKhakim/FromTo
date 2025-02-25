@@ -1,4 +1,4 @@
-package io.fromto.presentation.translation
+package io.fromto.presentation.translation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -80,7 +80,7 @@ fun TranslationTextField(
     ) {
         LazyColumn {
             item {
-                if (inputText.isNotEmpty() && !isFocused) {
+                if (inputText.isNotBlank() && translatedText.isNotBlank() && !isFocused) {
                     LanguageTitle(
                         modifier = Modifier.padding(
                             start = Dimens.PaddingMedium,
@@ -117,7 +117,7 @@ fun TranslationTextField(
                         keyboardType = KeyboardType.Text
                     ),
                     supportingText = {
-                        if (inputText.isNotEmpty() && translatedText.isNotEmpty() && !isTranslating) {
+                        if (inputText.isNotBlank() && translatedText.isNotBlank() && !isTranslating) {
                             Column {
                                 HorizontalDivider(
                                     color = MaterialTheme.colorScheme.onSurface.copy(
@@ -155,7 +155,7 @@ fun TranslationTextField(
                 )
             }
         }
-        if (inputText.isNotEmpty())
+        if (inputText.isNotBlank())
             Button(
                 modifier = Modifier.align(Alignment.BottomEnd),
                 shape = MaterialTheme.shapes.large,

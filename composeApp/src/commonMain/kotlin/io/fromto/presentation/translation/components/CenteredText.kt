@@ -1,4 +1,4 @@
-package io.fromto.presentation.translation
+package io.fromto.presentation.translation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

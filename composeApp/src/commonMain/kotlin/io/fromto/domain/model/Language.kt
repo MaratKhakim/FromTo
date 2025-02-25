@@ -1,10 +1,12 @@
-package io.fromto.domain.language
+package io.fromto.domain.model
 
 enum class Language(val code: String) {
+    KARAKALPAK("kaa"),
+    KARAKALPAK_CYRILLIC("kaa"),
+    UZBEK("uzn_Latn"),
+    UZBEK_CYRILLIC("uzn_Latn"),
     ENGLISH("eng_Latn"),
     RUSSIAN("rus_Cyrl"),
-    UZBEK("uzn_Latn"),
-    KARAKALPAK("kaa"),
     ACEHNESE_ARABIC_SCRIPT("ace_Arab"),
     ACEHNESE_LATIN_SCRIPT("ace_Latn"),
     MESOPOTAMIAN_ARABIC("acm_Arab"),

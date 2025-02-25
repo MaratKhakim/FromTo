@@ -1,3 +1,5 @@
+package io.fromto.presentation.translation.components
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,10 +41,8 @@ import fromto.composeapp.generated.resources.swap
 import fromto.composeapp.generated.resources.swap_horiz_white
 import fromto.composeapp.generated.resources.translate_from
 import fromto.composeapp.generated.resources.translate_to
-import io.fromto.domain.language.Language
+import io.fromto.domain.model.Language
 import io.fromto.presentation.theme.Dimens
-import io.fromto.presentation.translation.CenteredTextWithCloseButton
-import io.fromto.presentation.translation.LanguageButton
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -50,10 +50,11 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguageSelector(
-    sourceLanguage: String,
-    targetLanguage: String,
-    onSourceLanguageSelected: (String) -> Unit,
-    onTargetLanguageSelected: (String) -> Unit,
+    sourceLanguage: Language,
+    targetLanguage: Language,
+    onSourceLanguageSelected: (Language) -> Unit,
+    onTargetLanguageSelected: (Language) -> Unit,
+    onSwapLanguages: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -137,9 +138,9 @@ fun LanguageSelector(
                                 .fillMaxWidth()
                                 .clickable {
                                     if (isSelectingSource) {
-                                        onSourceLanguageSelected(language.name.lowercase())
+                                        onSourceLanguageSelected(language)
                                     } else {
-                                        onTargetLanguageSelected(language.name.lowercase())
+                                        onTargetLanguageSelected(language)
                                     }
                                     searchQuery = ""
                                     coroutineScope.launch { bottomSheetState.hide() }
@@ -176,17 +177,14 @@ fun LanguageSelector(
     ) {
         LanguageButton(
             modifier = Modifier.weight(1f),
-            text = sourceLanguage
+            text = sourceLanguage.name
         ) {
             isSelectingSource = true
             showBottomSheet = true
         }
 
         IconButton(
-            onClick = {
-                onSourceLanguageSelected(targetLanguage)
-                onTargetLanguageSelected(sourceLanguage)
-            }
+            onClick = onSwapLanguages
         ) {
             Icon(
                 painter = painterResource(Res.drawable.swap_horiz_white),
@@ -197,7 +195,7 @@ fun LanguageSelector(
 
         LanguageButton(
             modifier = Modifier.weight(1f),
-            text = targetLanguage
+            text = targetLanguage.name
         ) {
             isSelectingSource = false
             showBottomSheet = true

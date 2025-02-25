@@ -1,6 +1,5 @@
 package io.fromto.presentation.translation
 
-import LanguageSelector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -10,23 +9,39 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.buildAnnotatedString
+import fromto.composeapp.generated.resources.Res
+import fromto.composeapp.generated.resources.text_copied
 import io.fromto.presentation.theme.Dimens
+import io.fromto.presentation.translation.components.ErrorMessage
+import io.fromto.presentation.translation.components.LanguageSelector
+import io.fromto.presentation.translation.components.TranslationTextField
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun TranslationScreen() {
-    var inputText by remember { mutableStateOf("") }
-    var translatedText by remember { mutableStateOf("") }
-    var isTranslating by remember { mutableStateOf(false) }
+fun TranslationScreen(
+    state: TranslateState,
+    onEvent: (TranslateEvent) -> Unit
+) {
+    val clipboardManager = LocalClipboardManager.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val textCopiedConfirmation = stringResource(Res.string.text_copied)
 
-    Scaffold { padding ->
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+    ) { padding ->
         BoxWithConstraints {
             val screenHeight = maxHeight
+
             Column(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface)
@@ -38,28 +53,50 @@ fun TranslationScreen() {
                 TranslationTextField(
                     modifier = Modifier
                         .heightIn(min = screenHeight * 2 / 3),
-                    inputText = inputText,
-                    translatedText = translatedText,
-                    isTranslating = isTranslating,
-                    fromLanguage = "English",
-                    toLanguage = "Spanish",
+                    inputText = state.fromText,
+                    translatedText = state.toText,
+                    isTranslating = state.isTranslating,
+                    fromLanguage = state.fromLanguage.name,
+                    toLanguage = state.toLanguage.name,
                     onCloseClick = {
-                        inputText = ""
-                        translatedText = ""
-                        isTranslating = false
+                        onEvent(TranslateEvent.ClearText)
                     },
                     onTextChange = {
-                        inputText = it
-                        translatedText = "Translate: $it"
+                        onEvent(TranslateEvent.EnterText(it))
                     },
-                    onCopyClick = {},
+                    onCopyClick = {
+                        clipboardManager.setText(
+                            buildAnnotatedString {
+                                append(it)
+                            }
+                        )
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(textCopiedConfirmation)
+                        }
+                    },
                 )
 
                 LanguageSelector(
-                    sourceLanguage = "English",
-                    targetLanguage = "Spanish",
-                    onSourceLanguageSelected = {},
-                    onTargetLanguageSelected = {}
+                    sourceLanguage = state.fromLanguage,
+                    targetLanguage = state.toLanguage,
+                    onSourceLanguageSelected = {
+                        onEvent(TranslateEvent.SelectFromLanguage(it))
+                    },
+                    onTargetLanguageSelected = {
+                        onEvent(TranslateEvent.SelectToLanguage(it))
+                    },
+                    onSwapLanguages = {
+                        onEvent(TranslateEvent.SwapLanguages)
+                    }
+                )
+            }
+
+            state.error?.let {
+                ErrorMessage(
+                    error = it,
+                    onDismiss = {
+                        onEvent(TranslateEvent.ClearError)
+                    }
                 )
             }
         }

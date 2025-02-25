@@ -8,4 +8,13 @@
     <string name="copy">Copy</string>
     <string name="enter_text">Enter text</string>
     <string name="new_translation">New translation</string>
+    <string name="text_copied">Text copied</string>
+    <string name="error_network_unavailable">Network unavailable. Please check your connection.</string>
+    <string name="error_server_error">A server error occurred during translation.</string>
+    <string name="error_timeout">The translation request timed out. Please try again.</string>
+    <string name="error_too_many_requests">Too many requests. Please wait and try again.</string>
+    <string name="error_serialization_error">An error occurred while processing the translation.</string>
+    <string name="error_unknown">An unknown error occurred.</string>
+    <string name="error">Error</string>
+    <string name="dismiss_error">Dismiss error</string>
 </resources>

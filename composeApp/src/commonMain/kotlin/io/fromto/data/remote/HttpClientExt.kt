@@ -1,7 +1,7 @@
 package io.fromto.data.remote
 
-import io.fromto.domain.util.DataError
 import io.fromto.domain.util.Result
+import io.fromto.domain.util.TranslateError
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.SocketTimeoutException
@@ -12,16 +12,16 @@ import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> safeCall(
     execute: () -> HttpResponse
-): Result<T, DataError.Remote> {
+): Result<T, TranslateError> {
     val response = try {
         execute()
-    } catch(e: SocketTimeoutException) {
-        return Result.Error(DataError.Remote.REQUEST_TIMEOUT)
-    } catch(e: UnresolvedAddressException) {
-        return Result.Error(DataError.Remote.NO_INTERNET)
+    } catch (e: SocketTimeoutException) {
+        return Result.Error(TranslateError.Timeout)
+    } catch (e: UnresolvedAddressException) {
+        return Result.Error(TranslateError.NetworkUnavailable)
     } catch (e: Exception) {
         coroutineContext.ensureActive()
-        return Result.Error(DataError.Remote.UNKNOWN)
+        return Result.Error(TranslateError.UnknownError)
     }
 
     return responseToResult(response)
@@ -29,18 +29,19 @@ suspend inline fun <reified T> safeCall(
 
 suspend inline fun <reified T> responseToResult(
     response: HttpResponse
-): Result<T, DataError.Remote> {
-    return when(response.status.value) {
+): Result<T, TranslateError> {
+    return when (response.status.value) {
         in 200..299 -> {
             try {
                 Result.Success(response.body<T>())
-            } catch(e: NoTransformationFoundException) {
-                Result.Error(DataError.Remote.SERIALIZATION)
+            } catch (e: NoTransformationFoundException) {
+                Result.Error(TranslateError.SerializationError)
             }
         }
-        408 -> Result.Error(DataError.Remote.REQUEST_TIMEOUT)
-        429 -> Result.Error(DataError.Remote.TOO_MANY_REQUESTS)
-        in 500..599 -> Result.Error(DataError.Remote.SERVER)
-        else -> Result.Error(DataError.Remote.UNKNOWN)
+
+        408 -> Result.Error(TranslateError.Timeout)
+        429 -> Result.Error(TranslateError.TooManyRequests)
+        in 500..599 -> Result.Error(TranslateError.ServerError)
+        else -> Result.Error(TranslateError.UnknownError)
     }
 }
