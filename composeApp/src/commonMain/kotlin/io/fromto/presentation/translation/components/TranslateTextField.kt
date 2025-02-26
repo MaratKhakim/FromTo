@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
@@ -41,6 +42,7 @@ import fromto.composeapp.generated.resources.Res
 import fromto.composeapp.generated.resources.copy
 import fromto.composeapp.generated.resources.enter_text
 import fromto.composeapp.generated.resources.new_translation
+import io.fromto.presentation.shimmerEffect
 import io.fromto.presentation.theme.Dimens
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -113,37 +115,43 @@ fun TranslationTextField(
                         unfocusedBorderColor = Color.Transparent,
                     ),
                     keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Go,
-                        keyboardType = KeyboardType.Text
+                        autoCorrectEnabled = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Go
                     ),
                     supportingText = {
-                        if (inputText.isNotBlank() && translatedText.isNotBlank() && !isTranslating) {
+                        val isNotBlank = inputText.isNotBlank() && translatedText.isNotBlank()
+                        if (isNotBlank || isTranslating) {
                             Column {
-                                HorizontalDivider(
-                                    color = MaterialTheme.colorScheme.onSurface.copy(
-                                        0.2f
+                                if (isNotBlank) {
+                                    HorizontalDivider(
+                                        color = MaterialTheme.colorScheme.onSurface.copy(
+                                            0.2f
+                                        )
                                     )
-                                )
+                                }
                                 if (!isFocused) {
                                     LanguageTitle(
                                         modifier = Modifier.padding(top = Dimens.PaddingMedium),
                                         language = toLanguage,
                                     )
                                 }
-                                Text(
+                                TranslatedTextSection(
                                     modifier = Modifier.padding(top = Dimens.PaddingMedium),
-                                    text = translatedText,
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    style = MaterialTheme.typography.bodyMedium
+                                    isTranslating = isTranslating,
+                                    fromText = inputText,
+                                    translatedText = translatedText
                                 )
-                                IconButton(
-                                    onClick = { onCopyClick(translatedText) }
-                                ) {
-                                    Icon(
-                                        painter = painterResource(Res.drawable.copy),
-                                        contentDescription = stringResource(Res.string.copy),
-                                        tint = MaterialTheme.colorScheme.onBackground
-                                    )
+                                if (!isTranslating && isNotBlank) {
+                                    IconButton(
+                                        onClick = { onCopyClick(translatedText) }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(Res.drawable.copy),
+                                            contentDescription = stringResource(Res.string.copy),
+                                            tint = MaterialTheme.colorScheme.onBackground
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -178,6 +186,31 @@ fun TranslationTextField(
             }
     }
 }
+
+@Composable
+fun TranslatedTextSection(
+    modifier: Modifier,
+    fromText: String,
+    translatedText: String,
+    isTranslating: Boolean
+) {
+    if (isTranslating) {
+        Text(
+            text = fromText,
+            modifier = modifier
+                .shimmerEffect(true)
+                .alpha(0f)
+        )
+    }
+
+    Text(
+        text = translatedText,
+        modifier = modifier.alpha(if (isTranslating) 0f else 1f),
+        color = MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.bodyMedium
+    )
+}
+
 
 @Composable
 fun LanguageTitle(

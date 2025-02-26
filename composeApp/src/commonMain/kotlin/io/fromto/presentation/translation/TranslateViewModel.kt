@@ -95,7 +95,7 @@ class TranslateViewModel(
             it.copy(
                 fromLanguage = it.toLanguage,
                 toLanguage = it.fromLanguage,
-                fromText = if (it.toText.isBlank()) "" else it.fromText,
+                fromText = it.toText.ifBlank {""},
                 toText = it.fromText
             )
         }
