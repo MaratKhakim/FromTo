@@ -55,7 +55,7 @@ fun ErrorMessage(
             Icon(
                 imageVector = Icons.Default.Warning,
                 contentDescription = stringResource(Res.string.error),
-                modifier = Modifier.size(Dimens.IconSize)
+                modifier = Modifier.size(Dimens.IconSizeMedium)
             )
 
             Spacer(modifier = Modifier.width(Dimens.PaddingMedium))
@@ -68,7 +68,7 @@ fun ErrorMessage(
 
             IconButton(
                 onClick = onDismiss,
-                modifier = Modifier.size(Dimens.IconSize)
+                modifier = Modifier.size(Dimens.IconSizeMedium)
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,

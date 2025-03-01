@@ -7,6 +7,7 @@
     <string name="close">Close</string>
     <string name="copy">Copy</string>
     <string name="enter_text">Enter text</string>
+    <string name="translation_result">Translated text will appear here</string>
     <string name="new_translation">New translation</string>
     <string name="text_copied">Text copied</string>
     <string name="error_network_unavailable">Network unavailable. Please check your connection.</string>

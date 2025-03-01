@@ -95,7 +95,7 @@ class TranslateViewModel(
             it.copy(
                 fromLanguage = it.toLanguage,
                 toLanguage = it.fromLanguage,
-                fromText = it.toText.ifBlank {""},
+                fromText = it.toText.ifBlank { "" },
                 toText = it.fromText
             )
         }
@@ -111,7 +111,7 @@ class TranslateViewModel(
         translationJob = viewModelScope.launch {
             _state.update { it.copy(isTranslating = true) }
 
-            val resultCase = when (_state.value.fromLanguage) {
+            val resultCase = when (_state.value.toLanguage) {
                 Language.UZBEK_CYRILLIC, Language.KARAKALPAK_CYRILLIC -> "cyrill"
                 else -> "latin"
             }
@@ -141,7 +141,14 @@ class TranslateViewModel(
 
     private fun clearText() {
         translationJob?.cancel()
-        _state.update { TranslateState() }
+        _state.update {
+            it.copy(
+                fromText = "",
+                toText = "",
+                isTranslating = false,
+                error = null,
+            )
+        }
     }
 
     private fun clearError() {

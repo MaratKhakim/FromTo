@@ -9,7 +9,8 @@ object Dimens {
     val PaddingLarge: Dp = 24.dp
 
     val ButtonHeight: Dp = 48.dp
-    val IconSize = 24.dp
+    val IconSizeSmall: Dp = 16.dp
+    val IconSizeMedium: Dp = 24.dp
     val TouchTargetSize = 32.dp
 
     val Elevation = 4.dp

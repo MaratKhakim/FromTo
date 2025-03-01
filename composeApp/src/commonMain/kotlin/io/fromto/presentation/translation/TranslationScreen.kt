@@ -1,17 +1,28 @@
 package io.fromto.presentation.translation
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import fromto.composeapp.generated.resources.Res
+import fromto.composeapp.generated.resources.close
+import fromto.composeapp.generated.resources.copy
+import fromto.composeapp.generated.resources.enter_text
+import fromto.composeapp.generated.resources.translation_result
 import io.fromto.presentation.theme.Dimens
 import io.fromto.presentation.translation.components.ErrorMessage
 import io.fromto.presentation.translation.components.LanguageSelector
-import io.fromto.presentation.translation.components.TranslationTextField
+import io.fromto.presentation.translation.components.TranslateTextField
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TranslationScreen(
@@ -19,54 +30,82 @@ fun TranslationScreen(
     onCopyClick: (String) -> Unit,
     onEvent: (TranslateEvent) -> Unit
 ) {
-    BoxWithConstraints {
-        val screenHeight = maxHeight * 3 / 4
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(Dimens.PaddingMedium),
-            verticalArrangement = Arrangement.spacedBy(Dimens.PaddingMedium)
-        ) {
-            TranslationTextField(
-                modifier = Modifier
-                    .height(screenHeight),
-                inputText = state.fromText,
-                translatedText = state.toText,
-                isTranslating = state.isTranslating,
-                fromLanguage = state.fromLanguage.name,
-                toLanguage = state.toLanguage.name,
-                onCloseClick = {
-                    onEvent(TranslateEvent.ClearText)
-                },
-                onTextChange = {
-                    onEvent(TranslateEvent.EnterText(it))
-                },
-                onCopyClick = onCopyClick,
-            )
-
-            LanguageSelector(
-                sourceLanguage = state.fromLanguage,
-                targetLanguage = state.toLanguage,
-                onSourceLanguageSelected = {
-                    onEvent(TranslateEvent.SelectFromLanguage(it))
-                },
-                onTargetLanguageSelected = {
-                    onEvent(TranslateEvent.SelectToLanguage(it))
-                },
-                onSwapLanguages = {
-                    onEvent(TranslateEvent.SwapLanguages)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Dimens.PaddingMedium),
+        verticalArrangement = Arrangement.spacedBy(Dimens.PaddingMedium)
+    ) {
+        TranslateTextField(
+            modifier = Modifier.weight(1f),
+            language = state.fromLanguage.name,
+            text = state.fromText,
+            onValueChange = {
+                onEvent(TranslateEvent.EnterText(it))
+            },
+            readOnly = false,
+            placeholder = stringResource(Res.string.enter_text),
+            headerContent = {
+                if (state.fromText.isNotBlank()) {
+                    IconButton(
+                        onClick = {
+                            onEvent(TranslateEvent.ClearText)
+                        },
+                        modifier = Modifier.size(Dimens.IconSizeSmall)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = stringResource(Res.string.close),
+                            tint = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
-            )
-        }
+            }
+        )
 
-        state.error?.let {
-            ErrorMessage(
-                error = it,
-                onDismiss = {
-                    onEvent(TranslateEvent.ClearError)
+        TranslateTextField(
+            modifier = Modifier.weight(2f),
+            language = state.toLanguage.name,
+            text = state.toText,
+            readOnly = true,
+            placeholder = stringResource(Res.string.translation_result),
+            actionContent = {
+                IconButton(
+                    onClick = {
+                        onCopyClick(state.toText)
+                    },
+                    modifier = Modifier.size(Dimens.IconSizeMedium)
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.copy),
+                        contentDescription = stringResource(Res.string.copy),
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
                 }
-            )
-        }
+            }
+        )
+
+        LanguageSelector(
+            sourceLanguage = state.fromLanguage,
+            targetLanguage = state.toLanguage,
+            onSourceLanguageSelected = {
+                onEvent(TranslateEvent.SelectFromLanguage(it))
+            },
+            onTargetLanguageSelected = {
+                onEvent(TranslateEvent.SelectToLanguage(it))
+            },
+            onSwapLanguages = {
+                onEvent(TranslateEvent.SwapLanguages)
+            }
+        )
+    }
+
+    state.error?.let {
+        ErrorMessage(
+            error = it,
+            onDismiss = {
+                onEvent(TranslateEvent.ClearError)
+            }
+        )
     }
 }

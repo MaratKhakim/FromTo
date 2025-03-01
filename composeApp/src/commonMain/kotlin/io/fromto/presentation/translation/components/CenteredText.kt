@@ -41,7 +41,7 @@ fun CenteredTextWithCloseButton(
                 imageVector = Icons.Default.Close,
                 contentDescription = stringResource(Res.string.close),
                 tint = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.size(Dimens.IconSize)
+                modifier = Modifier.size(Dimens.IconSizeMedium)
             )
         }
 
