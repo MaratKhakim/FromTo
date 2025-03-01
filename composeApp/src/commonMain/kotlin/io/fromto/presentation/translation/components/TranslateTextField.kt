@@ -34,7 +34,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -70,7 +69,7 @@ fun TranslationTextField(
                 elevation = Dimens.Elevation,
                 shape = MaterialTheme.shapes.extraLarge
             )
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surface)
             .clip(MaterialTheme.shapes.large)
             .padding(Dimens.PaddingSmall)
             .clickable(
@@ -98,11 +97,11 @@ fun TranslationTextField(
                     onValueChange = onTextChange,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
                         .focusRequester(focusRequester)
                         .onFocusChanged { isFocused = it.isFocused },
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                    ),
+                    maxLines = 7,
+                    textStyle = MaterialTheme.typography.bodyMedium,
                     placeholder = {
                         Text(
                             text = stringResource(Res.string.enter_text),

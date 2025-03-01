@@ -33,14 +33,14 @@ fun CenteredTextWithCloseButton(
                 .align(Alignment.TopEnd)
                 .size(Dimens.TouchTargetSize)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(MaterialTheme.colorScheme.background)
                 .clickable(onClick = onClose),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = stringResource(Res.string.close),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(Dimens.IconSize)
             )
         }

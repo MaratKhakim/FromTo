@@ -17,4 +17,8 @@
     <string name="error_unknown">An unknown error occurred.</string>
     <string name="error">Error</string>
     <string name="dismiss_error">Dismiss error</string>
+    <string name="history">History</string>
+    <string name="translate">Translate</string>
+    <string name="switch_localization">Switch Localization</string>
+    <string name="clear_history">Clear History</string>
 </resources>

@@ -76,7 +76,7 @@ fun LanguageSelector(
             },
             sheetState = bottomSheetState,
             modifier = Modifier.fillMaxSize(),
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.surface,
         ) {
             Column(Modifier.padding(horizontal = Dimens.PaddingMedium)) {
                 CenteredTextWithCloseButton(
@@ -95,8 +95,8 @@ fun LanguageSelector(
 
                 OutlinedTextField(
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surface,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
                     ),
@@ -109,13 +109,13 @@ fun LanguageSelector(
                         Text(
                             text = stringResource(Res.string.search),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     },
                     leadingIcon = {
                         Icon(
                             Icons.Default.Search,
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = MaterialTheme.colorScheme.onBackground,
                             contentDescription = stringResource(Res.string.search)
                         )
                     },
@@ -171,7 +171,7 @@ fun LanguageSelector(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(Dimens.PaddingMedium),
+            .padding(vertical = Dimens.PaddingMedium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
