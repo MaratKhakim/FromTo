@@ -50,6 +50,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
 
             implementation(libs.bundles.ktor)
+            implementation(libs.multiplatform.settings.no.arg)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

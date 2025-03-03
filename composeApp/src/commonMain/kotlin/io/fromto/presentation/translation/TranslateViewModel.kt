@@ -2,8 +2,11 @@ package io.fromto.presentation.translation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.fromto.domain.model.AppLocale
 import io.fromto.domain.model.Language
 import io.fromto.domain.model.TranslationParams
+import io.fromto.domain.usecase.ChangeLocaleUseCase
+import io.fromto.domain.usecase.GetCurrentLocaleUseCase
 import io.fromto.domain.usecase.TranslateUseCase
 import io.fromto.domain.util.onError
 import io.fromto.domain.util.onSuccess
@@ -22,12 +25,19 @@ import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class TranslateViewModel(
-    private val translateUseCase: TranslateUseCase
+    private val translateUseCase: TranslateUseCase,
+    private val changeLocaleUseCase: ChangeLocaleUseCase,
+    getCurrentLocaleUseCase: GetCurrentLocaleUseCase
 ) : ViewModel() {
 
     private var translationJob: Job? = null
 
-    private val _state = MutableStateFlow(TranslateState())
+    private val _state =
+        MutableStateFlow(
+            TranslateState(
+                locale = AppLocale.fromCode(getCurrentLocaleUseCase())
+            )
+        )
     val state = _state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -53,10 +63,18 @@ class TranslateViewModel(
             is TranslateEvent.EnterText -> enterText(event.text)
             is TranslateEvent.SelectFromLanguage -> selectFromLanguage(event.language)
             is TranslateEvent.SelectToLanguage -> selectToLanguage(event.language)
+            is TranslateEvent.SelectLocale -> selectLocale(event.appLocale)
             TranslateEvent.SwapLanguages -> swapLanguages()
             TranslateEvent.ClearText -> clearText()
             TranslateEvent.ClearError -> clearError()
         }
+    }
+
+    private fun selectLocale(appLocale: AppLocale) {
+        _state.update {
+            it.copy(locale = appLocale)
+        }
+        changeLocaleUseCase(appLocale.languageCode)
     }
 
     private fun enterText(text: String) {

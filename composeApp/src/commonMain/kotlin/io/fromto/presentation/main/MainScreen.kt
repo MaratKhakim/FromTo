@@ -33,6 +33,7 @@ import fromto.composeapp.generated.resources.history
 import fromto.composeapp.generated.resources.text_copied
 import fromto.composeapp.generated.resources.translate
 import io.fromto.presentation.history.HistoryScreen
+import io.fromto.presentation.translation.TranslateEvent
 import io.fromto.presentation.translation.TranslateViewModel
 import io.fromto.presentation.translation.TranslationScreen
 import kotlinx.coroutines.launch
@@ -52,13 +53,24 @@ fun MainScreen() {
     val viewModel = koinViewModel<TranslateViewModel>()
     val state by viewModel.state.collectAsState()
 
+    var isLocalizationMenuOpen by remember { mutableStateOf(false) }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             AdaptiveTopBar(
+                activeLocale = state.locale,
+                expanded = isLocalizationMenuOpen,
+                onExpandedChange = {
+                    isLocalizationMenuOpen = it
+                },
                 destination = currentDestination,
-                onLocalizationSwitch = {
-                    println("Localization switch clicked")
+                onClickLocalization = {
+                    isLocalizationMenuOpen = true
+                },
+                onSelectLocale = {
+                    isLocalizationMenuOpen = false
+                    viewModel.onEvent(TranslateEvent.SelectLocale(it))
                 },
                 onClearHistory = {
                     println("Clear history clicked")

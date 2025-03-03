@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">FromTo</string>
+    <string name="translate_from">Awdarmalaw</string>
+    <string name="translate_to">Translate to</string>
+    <string name="search">Search</string>
+    <string name="swap">Swap</string>
+    <string name="close">Close</string>
+    <string name="copy">Copy</string>
+    <string name="enter_text">Tekstti kirit</string>
+    <string name="translation_result">Awdarmalangan tekst usi jerde payda boladi</string>
+    <string name="new_translation">New translation</string>
+    <string name="text_copied">Text copied</string>
+    <string name="error_network_unavailable">Network unavailable. Please check your connection.</string>
+    <string name="error_server_error">A server error occurred during translation.</string>
+    <string name="error_timeout">The translation request timed out. Please try again.</string>
+    <string name="error_too_many_requests">Too many requests. Please wait and try again.</string>
+    <string name="error_serialization_error">An error occurred while processing the translation.</string>
+    <string name="error_unknown">An unknown error occurred.</string>
+    <string name="error">Error</string>
+    <string name="dismiss_error">Dismiss error</string>
+    <string name="history">History</string>
+    <string name="translate">Translate</string>
+    <string name="switch_localization">Switch Localization</string>
+    <string name="clear_history">Clear History</string>
+</resources>

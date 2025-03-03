@@ -13,17 +13,22 @@ import fromto.composeapp.generated.resources.change_language
 import fromto.composeapp.generated.resources.clear_history
 import fromto.composeapp.generated.resources.switch_localization
 import fromto.composeapp.generated.resources.trash
+import io.fromto.domain.model.AppLocale
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdaptiveTopBar(
+    activeLocale: AppLocale,
+    expanded: Boolean,
     destination: Destination,
-    onLocalizationSwitch: () -> Unit,
+    onExpandedChange: (Boolean) -> Unit,
+    onSelectLocale: (AppLocale) -> Unit,
+    onClickLocalization: () -> Unit,
     onClearHistory: () -> Unit
 ) {
-    val actions = getTopBarActionsForRoute(destination, onLocalizationSwitch, onClearHistory)
+    val actions = getTopBarActionsForRoute(destination, onClickLocalization, onClearHistory)
 
     TopAppBar(
         colors = TopAppBarColors(
@@ -48,6 +53,7 @@ fun AdaptiveTopBar(
                     )
                 }
             }
+            LocaleDropdownMenu(expanded, onExpandedChange, onSelectLocale, activeLocale)
         }
     )
 }
