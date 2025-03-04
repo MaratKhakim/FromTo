@@ -21,6 +21,7 @@ import io.fromto.presentation.theme.Dimens
 import io.fromto.presentation.translation.components.ErrorMessage
 import io.fromto.presentation.translation.components.LanguageSelector
 import io.fromto.presentation.translation.components.TranslateTextField
+import io.fromto.presentation.util.getLanguageResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -38,7 +39,7 @@ fun TranslationScreen(
     ) {
         TranslateTextField(
             modifier = Modifier.weight(1f),
-            language = state.fromLanguage.name,
+            language = stringResource(getLanguageResource(state.fromLanguage.name)),
             text = state.fromText,
             onValueChange = {
                 onEvent(TranslateEvent.EnterText(it))
@@ -65,7 +66,7 @@ fun TranslationScreen(
 
         TranslateTextField(
             modifier = Modifier.weight(2f),
-            language = state.toLanguage.name,
+            language = stringResource(getLanguageResource(state.toLanguage.name)),
             text = state.toText,
             readOnly = true,
             placeholder = stringResource(Res.string.translation_result),
@@ -86,8 +87,8 @@ fun TranslationScreen(
         )
 
         LanguageSelector(
-            sourceLanguage = state.fromLanguage,
-            targetLanguage = state.toLanguage,
+            sourceLanguage = stringResource(getLanguageResource(state.fromLanguage.name)),
+            targetLanguage = stringResource(getLanguageResource(state.toLanguage.name)),
             onSourceLanguageSelected = {
                 onEvent(TranslateEvent.SelectFromLanguage(it))
             },

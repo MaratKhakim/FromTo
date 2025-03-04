@@ -43,6 +43,7 @@ import fromto.composeapp.generated.resources.translate_from
 import fromto.composeapp.generated.resources.translate_to
 import io.fromto.domain.model.Language
 import io.fromto.presentation.theme.Dimens
+import io.fromto.presentation.util.getLanguageResource
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -50,8 +51,8 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguageSelector(
-    sourceLanguage: Language,
-    targetLanguage: Language,
+    sourceLanguage: String,
+    targetLanguage: String,
     onSourceLanguageSelected: (Language) -> Unit,
     onTargetLanguageSelected: (Language) -> Unit,
     onSwapLanguages: () -> Unit,
@@ -131,7 +132,7 @@ fun LanguageSelector(
                 LazyColumn {
                     itemsIndexed(filteredLanguages) { index, language ->
                         Text(
-                            text = language.name.lowercase(),
+                            text = stringResource(getLanguageResource(language.name)),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier
@@ -177,7 +178,7 @@ fun LanguageSelector(
     ) {
         LanguageButton(
             modifier = Modifier.weight(1f),
-            text = sourceLanguage.name
+            text = sourceLanguage
         ) {
             isSelectingSource = true
             showBottomSheet = true
@@ -195,7 +196,7 @@ fun LanguageSelector(
 
         LanguageButton(
             modifier = Modifier.weight(1f),
-            text = targetLanguage.name
+            text = targetLanguage
         ) {
             isSelectingSource = false
             showBottomSheet = true
