@@ -1,0 +1,31 @@
+CREATE TABLE historyEntity (
+    id TEXT PRIMARY KEY,
+    sourceText TEXT NOT NULL,
+    translatedText TEXT NOT NULL,
+    sourceLang TEXT NOT NULL,
+    targetLang TEXT NOT NULL,
+    timestamp INTEGER NOT NULL
+);
+
+getHistory:
+SELECT *
+FROM historyEntity
+ORDER BY timestamp DESC;
+
+insert:
+INSERT OR REPLACE
+INTO historyEntity(
+    id,
+    sourceText,
+    translatedText,
+    sourceLang,
+    targetLang,
+    timestamp
+)
+VALUES(?, ?, ?, ?, ?, ?);
+
+delete:
+DELETE FROM historyEntity WHERE id = ?;
+
+deleteAll:
+DELETE FROM historyEntity;

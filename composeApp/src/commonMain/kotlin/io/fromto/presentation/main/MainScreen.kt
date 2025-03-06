@@ -32,7 +32,9 @@ import fromto.composeapp.generated.resources.app_name
 import fromto.composeapp.generated.resources.history
 import fromto.composeapp.generated.resources.text_copied
 import fromto.composeapp.generated.resources.translate
+import io.fromto.presentation.history.HistoryEvent
 import io.fromto.presentation.history.HistoryScreen
+import io.fromto.presentation.history.HistoryViewModel
 import io.fromto.presentation.translation.TranslateEvent
 import io.fromto.presentation.translation.TranslateViewModel
 import io.fromto.presentation.translation.TranslationScreen
@@ -50,16 +52,21 @@ fun MainScreen() {
     val coroutineScope = rememberCoroutineScope()
     val textCopiedConfirmation = stringResource(Res.string.text_copied)
     var currentDestination by remember { mutableStateOf(Destination.Translate) }
-    val viewModel = koinViewModel<TranslateViewModel>()
-    val state by viewModel.state.collectAsState()
+
+    val translateViewModel = koinViewModel<TranslateViewModel>()
+    val translateState by translateViewModel.state.collectAsState()
+
+    val historyViewModel = koinViewModel<HistoryViewModel>()
+    val historyState by historyViewModel.state.collectAsState()
 
     var isLocalizationMenuOpen by remember { mutableStateOf(false) }
+    var showConfirmDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             AdaptiveTopBar(
-                activeLocale = state.locale,
+                activeLocale = translateState.locale,
                 expanded = isLocalizationMenuOpen,
                 onExpandedChange = {
                     isLocalizationMenuOpen = it
@@ -70,10 +77,12 @@ fun MainScreen() {
                 },
                 onSelectLocale = {
                     isLocalizationMenuOpen = false
-                    viewModel.onEvent(TranslateEvent.SelectLocale(it))
+                    translateViewModel.onEvent(TranslateEvent.SelectLocale(it))
                 },
                 onClearHistory = {
-                    println("Clear history clicked")
+                    if (historyState.items.isNotEmpty()) {
+                        showConfirmDialog = true
+                    }
                 }
             )
         },
@@ -118,8 +127,8 @@ fun MainScreen() {
             when (currentDestination) {
                 Destination.Translate ->
                     TranslationScreen(
-                        state = state,
-                        onEvent = viewModel::onEvent,
+                        state = translateState,
+                        onEvent = translateViewModel::onEvent,
                         onCopyClick = {
                             clipboardManager.setText(
                                 buildAnnotatedString {
@@ -132,8 +141,24 @@ fun MainScreen() {
                         }
                     )
 
-                Destination.History -> HistoryScreen()
+                Destination.History -> HistoryScreen(
+                    state = historyState,
+                    onEvent = historyViewModel::onEvent,
+                    onBack = {
+                        currentDestination = Destination.Translate
+                    }
+                )
             }
+        }
+
+        if (showConfirmDialog) {
+            DeleteConfirmationDialog(
+                onConfirm = {
+                    historyViewModel.onEvent(HistoryEvent.DeleteAllItems)
+                    showConfirmDialog = false
+                },
+                onDismiss = { showConfirmDialog = false }
+            )
         }
     }
 }

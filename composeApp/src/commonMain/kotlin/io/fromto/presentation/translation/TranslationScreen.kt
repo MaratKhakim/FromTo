@@ -16,9 +16,16 @@ import fromto.composeapp.generated.resources.Res
 import fromto.composeapp.generated.resources.close
 import fromto.composeapp.generated.resources.copy
 import fromto.composeapp.generated.resources.enter_text
+import fromto.composeapp.generated.resources.error_network_unavailable
+import fromto.composeapp.generated.resources.error_serialization_error
+import fromto.composeapp.generated.resources.error_server_error
+import fromto.composeapp.generated.resources.error_timeout
+import fromto.composeapp.generated.resources.error_too_many_requests
+import fromto.composeapp.generated.resources.error_unknown
 import fromto.composeapp.generated.resources.translation_result
+import io.fromto.domain.util.TranslateError
+import io.fromto.presentation.components.ErrorMessage
 import io.fromto.presentation.theme.Dimens
-import io.fromto.presentation.translation.components.ErrorMessage
 import io.fromto.presentation.translation.components.LanguageSelector
 import io.fromto.presentation.translation.components.TranslateTextField
 import io.fromto.presentation.util.getLanguageResource
@@ -103,10 +110,22 @@ fun TranslationScreen(
 
     state.error?.let {
         ErrorMessage(
-            error = it,
+            errorMessage = it.toMessage(),
             onDismiss = {
                 onEvent(TranslateEvent.ClearError)
             }
         )
+    }
+}
+
+@Composable
+fun TranslateError.toMessage(): String {
+    return when (this) {
+        TranslateError.NetworkUnavailable -> stringResource(Res.string.error_network_unavailable)
+        TranslateError.ServerError -> stringResource(Res.string.error_server_error)
+        TranslateError.Timeout -> stringResource(Res.string.error_timeout)
+        TranslateError.TooManyRequests -> stringResource(Res.string.error_too_many_requests)
+        TranslateError.SerializationError -> stringResource(Res.string.error_serialization_error)
+        TranslateError.UnknownError -> stringResource(Res.string.error_unknown)
     }
 }

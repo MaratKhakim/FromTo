@@ -8,6 +8,6 @@ fun initializeKoin(
 ) {
     startKoin {
         config?.invoke(this)
-        modules(platformModule, sharedModule)
+        modules(platformModule, sharedModule, historyModule)
     }
 }

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -34,6 +35,7 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,6 +46,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.kotlin.date.time)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)
@@ -51,9 +54,12 @@ kotlin {
 
             implementation(libs.bundles.ktor)
             implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines.extensions)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.native.driver)
         }
     }
 }
@@ -88,5 +94,13 @@ android {
 dependencies {
     implementation(libs.androidx.material3.android)
     debugImplementation(compose.uiTooling)
+}
+
+sqldelight {
+    databases {
+        create("TranslateDatabase") {
+            packageName.set("io.fromto.database")
+        }
+    }
 }
 

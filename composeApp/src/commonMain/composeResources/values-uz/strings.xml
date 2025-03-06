@@ -22,6 +22,13 @@
     <string name="translate">Tarjima</string>
     <string name="switch_localization">Lokalizatsiyani oʻzgartirish</string>
     <string name="clear_history">Tarixni tozalash</string>
+    <string name="cancel">Bekor qilish</string>
+    <string name="delete">Oʻchirish</string>
+    <string name="delete_all_translations">Barcha tarjimalarni oʻchirish?</string>
+    <string name="delete_all_translations_confirmation">Barcha tarjimalar tarixingizdan butunlay oʻchiriladi.</string>
+    <string name="empty_history_title">Tarjimalar tarixi boʻsh</string>
+    <string name="empty_history_button">Tarjima qilishni boshlash</string>
+    <string name="error_delete_error">Oʻchirish muvaffaqiyatsiz tugadi</string>
 
     <string name="karakalpak">Qoraqalpoq</string>
     <string name="karakalpak_cyrillic">Qoraqalpoq (kirill)</string>

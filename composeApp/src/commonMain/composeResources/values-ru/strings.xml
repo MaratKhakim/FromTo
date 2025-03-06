@@ -22,7 +22,13 @@
     <string name="translate">Перевод</string>
     <string name="switch_localization">Сменить локализацию</string>
     <string name="clear_history">Очистить историю</string>
-
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_all_translations">Удалить все переводы?</string>
+    <string name="delete_all_translations_confirmation">Это навсегда удалит все переводы из вашей истории.</string>
+    <string name="empty_history_title">История переводов пуста</string>
+    <string name="empty_history_button">Начать перевод</string>
+    <string name="error_delete_error">Не удалось удалить</string>
 
     <string name="karakalpak">Каракалпакский</string>
     <string name="karakalpak_cyrillic">Каракалпакский (кириллица)</string>

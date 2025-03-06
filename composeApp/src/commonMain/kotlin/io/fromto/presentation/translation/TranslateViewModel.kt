@@ -3,10 +3,12 @@ package io.fromto.presentation.translation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.fromto.domain.model.AppLocale
+import io.fromto.domain.model.HistoryItem
 import io.fromto.domain.model.Language
 import io.fromto.domain.model.TranslationParams
 import io.fromto.domain.usecase.ChangeLocaleUseCase
 import io.fromto.domain.usecase.GetCurrentLocaleUseCase
+import io.fromto.domain.usecase.SaveHistoryUseCase
 import io.fromto.domain.usecase.TranslateUseCase
 import io.fromto.domain.util.onError
 import io.fromto.domain.util.onSuccess
@@ -22,11 +24,14 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 @OptIn(FlowPreview::class)
 class TranslateViewModel(
     private val translateUseCase: TranslateUseCase,
     private val changeLocaleUseCase: ChangeLocaleUseCase,
+    private val saveHistoryUseCase: SaveHistoryUseCase,
     getCurrentLocaleUseCase: GetCurrentLocaleUseCase
 ) : ViewModel() {
 
@@ -64,6 +69,7 @@ class TranslateViewModel(
             is TranslateEvent.SelectFromLanguage -> selectFromLanguage(event.language)
             is TranslateEvent.SelectToLanguage -> selectToLanguage(event.language)
             is TranslateEvent.SelectLocale -> selectLocale(event.appLocale)
+            is TranslateEvent.SaveTranslation -> saveTranslation(event)
             TranslateEvent.SwapLanguages -> swapLanguages()
             TranslateEvent.ClearText -> clearText()
             TranslateEvent.ClearError -> clearError()
@@ -171,6 +177,22 @@ class TranslateViewModel(
 
     private fun clearError() {
         _state.update { it.copy(error = null) }
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    private fun saveTranslation(event: TranslateEvent.SaveTranslation) {
+        viewModelScope.launch {
+            saveHistoryUseCase(
+                HistoryItem(
+                    sourceText = event.sourceText,
+                    translatedText = event.translatedText,
+                    sourceLang = event.sourceLang,
+                    targetLang = event.targetLang,
+                    id = Uuid.random().toString(),
+                    timestamp = event.timestamp
+                )
+            )
+        }
     }
 
     override fun onCleared() {

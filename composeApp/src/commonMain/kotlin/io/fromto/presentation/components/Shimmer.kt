@@ -1,4 +1,4 @@
-package io.fromto.presentation
+package io.fromto.presentation.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat

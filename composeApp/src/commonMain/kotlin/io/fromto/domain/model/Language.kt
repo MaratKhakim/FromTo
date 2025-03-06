@@ -207,5 +207,10 @@ enum class Language(val code: String) {
     CHINESE_SIMPLIFIED("zho_Hans"),
     CHINESE_TRADITIONAL("zho_Hant"),
     STANDARD_MALAY("zsm_Latn"),
-    ZULU("zul_Latn"),
+    ZULU("zul_Latn");
+
+    companion object {
+        fun fromCode(code: String): Language =
+            Language.entries.find { it.code == code } ?: ENGLISH
+    }
 }

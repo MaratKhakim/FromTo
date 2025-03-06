@@ -22,6 +22,13 @@
     <string name="translate">Translate</string>
     <string name="switch_localization">Switch Localization</string>
     <string name="clear_history">Clear History</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="delete_all_translations">Delete all translations?</string>
+    <string name="delete_all_translations_confirmation">This will permanently remove all translations from your history.</string>
+    <string name="empty_history_title">Translation history is empty</string>
+    <string name="empty_history_button">Start translating</string>
+    <string name="error_delete_error">Failed to delete</string>
 
     <string name="karakalpak">Karakalpak</string>
     <string name="karakalpak_cyrillic">Karakalpak Cyrillic</string>

@@ -22,6 +22,13 @@
     <string name="translate">Awdarma</string>
     <string name="switch_localization">Lokalizaciyanı ózgertiw</string>
     <string name="clear_history">Tariyxtı tazalaw</string>
+    <string name="cancel">Biykarlaw</string>
+    <string name="delete">Óshiriw</string>
+    <string name="delete_all_translations">Hámme awdarmalardı óshiriwdi qáleysizbe?</string>
+    <string name="delete_all_translations_confirmation">Barlıq awdarmalar tariyxıńızdan óshiriledi.</string>
+    <string name="empty_history_title">Awdarmalar tariyxı bos</string>
+    <string name="empty_history_button">Awdarma baslaw</string>
+    <string name="error_delete_error">Óshiriw ámelge aspadı</string>
 
     <string name="karakalpak">Qaraqalpaq</string>
     <string name="karakalpak_cyrillic">Qaraqalpaq (kirill)</string>
