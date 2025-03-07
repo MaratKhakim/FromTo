@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,12 +30,14 @@ fun TranslateTextField(
     modifier: Modifier = Modifier,
     language: String,
     text: String,
+    placeholder: String,
     readOnly: Boolean,
     onValueChange: (String) -> Unit = {},
-    placeholder: String,
+    onFocusChanged: (Boolean) -> Unit = {},
     headerContent: (@Composable () -> Unit)? = null,
     actionContent: (@Composable () -> Unit)? = null,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     Box(
         modifier = modifier
             .shadow(
@@ -66,7 +71,9 @@ fun TranslateTextField(
                 value = text,
                 onValueChange = onValueChange,
                 readOnly = readOnly,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .onFocusChanged { onFocusChanged(it.isFocused) },
                 textStyle = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onSurface
                 ),
@@ -74,6 +81,11 @@ fun TranslateTextField(
                     autoCorrectEnabled = false,
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Go
+                ),
+                keyboardActions = KeyboardActions(
+                    onGo = {
+                        keyboardController?.hide()
+                    }
                 ),
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                 decorationBox = { innerTextField ->

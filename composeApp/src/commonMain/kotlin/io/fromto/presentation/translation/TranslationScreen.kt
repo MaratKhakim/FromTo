@@ -53,6 +53,9 @@ fun TranslationScreen(
             },
             readOnly = false,
             placeholder = stringResource(Res.string.enter_text),
+            onFocusChanged = {
+                onEvent(TranslateEvent.SaveTranslation(it))
+            },
             headerContent = {
                 if (state.fromText.isNotBlank()) {
                     IconButton(

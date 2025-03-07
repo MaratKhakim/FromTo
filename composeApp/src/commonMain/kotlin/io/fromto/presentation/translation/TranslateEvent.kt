@@ -11,13 +11,7 @@ sealed class TranslateEvent {
     data object SwapLanguages : TranslateEvent()
     data object ClearText : TranslateEvent()
     data object ClearError : TranslateEvent()
-    data class SaveTranslation(
-        val sourceText: String,
-        val translatedText: String,
-        val sourceLang: String,
-        val targetLang: String,
-        val timestamp: Long
-    ) : TranslateEvent()
+    data class SaveTranslation(val isFocused: Boolean) : TranslateEvent()
     data class SelectHistoryItem(
         val sourceText: String,
         val translatedText: String,

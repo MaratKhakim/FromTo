@@ -15,6 +15,7 @@ import io.fromto.domain.util.onSuccess
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -36,6 +38,8 @@ class TranslateViewModel(
 ) : ViewModel() {
 
     private var translationJob: Job? = null
+    private var saveJob: Job? = null
+    private var lastSavedText = ""
 
     private val _state =
         MutableStateFlow(
@@ -55,7 +59,7 @@ class TranslateViewModel(
         // Start listening to debounced text changes
         viewModelScope.launch {
             textChangeChannel.receiveAsFlow()
-                .debounce(300)
+                .debounce(TRANSLATE_DEBOUNCE_TIME)
                 .distinctUntilChanged()
                 .collectLatest { text ->
                     translate(text)
@@ -69,7 +73,7 @@ class TranslateViewModel(
             is TranslateEvent.SelectFromLanguage -> selectFromLanguage(event.language)
             is TranslateEvent.SelectToLanguage -> selectToLanguage(event.language)
             is TranslateEvent.SelectLocale -> selectLocale(event.appLocale)
-            is TranslateEvent.SaveTranslation -> saveTranslation(event)
+            is TranslateEvent.SaveTranslation -> saveTranslation(event.isFocused)
             is TranslateEvent.SelectHistoryItem -> selectHistoryItem(event)
             TranslateEvent.SwapLanguages -> swapLanguages()
             TranslateEvent.ClearText -> clearText()
@@ -193,23 +197,46 @@ class TranslateViewModel(
     }
 
     @OptIn(ExperimentalUuidApi::class)
-    private fun saveTranslation(event: TranslateEvent.SaveTranslation) {
-        viewModelScope.launch {
-            saveHistoryUseCase(
-                HistoryItem(
-                    sourceText = event.sourceText,
-                    translatedText = event.translatedText,
-                    sourceLang = event.sourceLang,
-                    targetLang = event.targetLang,
-                    id = Uuid.random().toString(),
-                    timestamp = event.timestamp
-                )
-            )
+    fun saveTranslation(isFocused: Boolean) {
+        if (isFocused) {
+            saveJob?.cancel()
+        } else {
+            saveJob = viewModelScope.launch {
+                // Small delay to catch rapid focus changes
+                delay(SAVE_DEBOUNCE_TIME)
+                if (shouldSaveToHistory(_state.value.fromText, _state.value.toText)) {
+                    saveHistoryUseCase(
+                        HistoryItem(
+                            sourceText = _state.value.fromText,
+                            translatedText = _state.value.toText,
+                            sourceLang = _state.value.fromLanguage.code,
+                            targetLang = _state.value.toLanguage.code,
+                            id = Uuid.random().toString(),
+                            timestamp = Clock.System.now().toEpochMilliseconds()
+                        )
+                    )
+                    lastSavedText = _state.value.fromText
+                }
+            }
         }
+    }
+
+    private fun shouldSaveToHistory(original: String, translated: String): Boolean {
+        return original.isNotBlank() &&
+                translated.isNotBlank() &&
+                original != translated &&
+                original != lastSavedText &&
+                original.length >= MIN_SAVE_LENGTH
     }
 
     override fun onCleared() {
         super.onCleared()
         textChangeChannel.close()
+    }
+
+    companion object {
+        private const val TRANSLATE_DEBOUNCE_TIME = 300L
+        private const val SAVE_DEBOUNCE_TIME = 500L
+        private const val MIN_SAVE_LENGTH = 3
     }
 }
