@@ -70,9 +70,22 @@ class TranslateViewModel(
             is TranslateEvent.SelectToLanguage -> selectToLanguage(event.language)
             is TranslateEvent.SelectLocale -> selectLocale(event.appLocale)
             is TranslateEvent.SaveTranslation -> saveTranslation(event)
+            is TranslateEvent.SelectHistoryItem -> selectHistoryItem(event)
             TranslateEvent.SwapLanguages -> swapLanguages()
             TranslateEvent.ClearText -> clearText()
             TranslateEvent.ClearError -> clearError()
+        }
+    }
+
+    private fun selectHistoryItem(event: TranslateEvent.SelectHistoryItem) {
+        translationJob?.cancel()
+        _state.update {
+            it.copy(
+                fromText = event.sourceText,
+                toText = event.translatedText,
+                fromLanguage = Language.fromCode(event.sourceLang),
+                toLanguage = Language.fromCode(event.targetLang)
+            )
         }
     }
 

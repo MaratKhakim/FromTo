@@ -27,7 +27,8 @@ fun HistoryScreen(
     state: HistoryState,
     onEvent: (HistoryEvent) -> Unit,
     modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onItemClicked: (HistoryItem) -> Unit
 ) {
     when {
         state.isLoading -> Loading()
@@ -35,6 +36,7 @@ fun HistoryScreen(
         else -> HistoryList(
             historyItems = state.items,
             onDelete = { id -> onEvent(HistoryEvent.DeleteItem(id)) },
+            onItemClicked = onItemClicked,
             modifier = modifier
                 .fillMaxSize()
                 .padding(horizontal = Dimens.PaddingMedium),
@@ -54,6 +56,7 @@ fun HistoryScreen(
 private fun HistoryList(
     historyItems: List<HistoryItem>,
     onDelete: (String) -> Unit,
+    onItemClicked: (HistoryItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -74,7 +77,8 @@ private fun HistoryList(
                     translatedText = item.translatedText,
                     fromLanguage = stringResource(getLanguageResource(Language.fromCode(item.sourceLang).name)),
                     toLanguage = stringResource(getLanguageResource(Language.fromCode(item.targetLang).name)),
-                    timestamp = item.timestamp
+                    timestamp = item.timestamp,
+                    onClick = { onItemClicked(item) }
                 )
             }
         }

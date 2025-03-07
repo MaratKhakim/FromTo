@@ -146,6 +146,17 @@ fun MainScreen() {
                     onEvent = historyViewModel::onEvent,
                     onBack = {
                         currentDestination = Destination.Translate
+                    },
+                    onItemClicked = {
+                        translateViewModel.onEvent(
+                            TranslateEvent.SelectHistoryItem(
+                                sourceText = it.sourceText,
+                                translatedText = it.translatedText,
+                                sourceLang = it.sourceLang,
+                                targetLang = it.targetLang
+                            )
+                        )
+                        currentDestination = Destination.Translate
                     }
                 )
             }

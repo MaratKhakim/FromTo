@@ -18,4 +18,10 @@ sealed class TranslateEvent {
         val targetLang: String,
         val timestamp: Long
     ) : TranslateEvent()
+    data class SelectHistoryItem(
+        val sourceText: String,
+        val translatedText: String,
+        val sourceLang: String,
+        val targetLang: String,
+    ) : TranslateEvent()
 }
