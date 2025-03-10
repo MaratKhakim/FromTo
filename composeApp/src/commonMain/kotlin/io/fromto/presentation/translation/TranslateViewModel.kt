@@ -8,8 +8,10 @@ import io.fromto.domain.model.Language
 import io.fromto.domain.model.TranslationParams
 import io.fromto.domain.usecase.ChangeLocaleUseCase
 import io.fromto.domain.usecase.GetCurrentLocaleUseCase
+import io.fromto.domain.usecase.GetSelectedLanguagesUseCase
 import io.fromto.domain.usecase.SaveHistoryUseCase
 import io.fromto.domain.usecase.TranslateUseCase
+import io.fromto.domain.usecase.UpdateSelectedLanguagesUseCase
 import io.fromto.domain.util.onError
 import io.fromto.domain.util.onSuccess
 import kotlinx.coroutines.FlowPreview
@@ -34,6 +36,8 @@ class TranslateViewModel(
     private val translateUseCase: TranslateUseCase,
     private val changeLocaleUseCase: ChangeLocaleUseCase,
     private val saveHistoryUseCase: SaveHistoryUseCase,
+    getSelectedLanguagesUseCase: GetSelectedLanguagesUseCase,
+    private val updateSelectedLanguagesUseCase: UpdateSelectedLanguagesUseCase,
     getCurrentLocaleUseCase: GetCurrentLocaleUseCase
 ) : ViewModel() {
 
@@ -44,7 +48,9 @@ class TranslateViewModel(
     private val _state =
         MutableStateFlow(
             TranslateState(
-                locale = AppLocale.fromCode(getCurrentLocaleUseCase())
+                locale = AppLocale.fromCode(getCurrentLocaleUseCase()),
+                fromLanguage = getSelectedLanguagesUseCase().from,
+                toLanguage = getSelectedLanguagesUseCase().to
             )
         )
     val state = _state.stateIn(
@@ -116,6 +122,9 @@ class TranslateViewModel(
                 toText = if (shouldSwap) "" else it.toText
             )
         }
+        viewModelScope.launch {
+            updateSelectedLanguagesUseCase(language, _state.value.toLanguage)
+        }
         translate(_state.value.fromText)
     }
 
@@ -128,6 +137,9 @@ class TranslateViewModel(
                 toText = if (shouldSwap) "" else it.toText
             )
         }
+        viewModelScope.launch {
+            updateSelectedLanguagesUseCase(_state.value.fromLanguage, language)
+        }
         translate(_state.value.fromText)
     }
 
@@ -139,6 +151,9 @@ class TranslateViewModel(
                 fromText = it.toText.ifBlank { "" },
                 toText = it.fromText
             )
+        }
+        viewModelScope.launch {
+            updateSelectedLanguagesUseCase(_state.value.toLanguage, _state.value.fromLanguage)
         }
     }
 

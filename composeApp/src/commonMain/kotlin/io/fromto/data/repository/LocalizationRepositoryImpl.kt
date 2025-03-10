@@ -5,19 +5,21 @@ import io.fromto.domain.model.AppLocale
 import io.fromto.domain.repository.LocalizationRepository
 import io.fromto.domain.util.LocaleManager
 
-const val KEY = "savedLanguageIso"
-
 class LocalizationRepositoryImpl(
     private val localeManager: LocaleManager
 ) : LocalizationRepository {
+    companion object {
+        private const val KEY_LOCALE = "savedLanguageIso"
+    }
+
     private val settings = Settings()
 
     override fun getCurrentLocale(): String {
-        return settings.getString(KEY, AppLocale.English.languageCode)
+        return settings.getString(KEY_LOCALE, AppLocale.English.languageCode)
     }
 
     override fun changeLocale(languageCode: String) {
-        settings.putString(KEY, languageCode)
+        settings.putString(KEY_LOCALE, languageCode)
         localeManager.updateLocale(languageCode)
     }
 }
