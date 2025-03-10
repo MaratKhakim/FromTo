@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
@@ -76,7 +77,9 @@ fun LanguageSelector(
                 showBottomSheet = false
             },
             sheetState = bottomSheetState,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .safeDrawingPadding(),
             containerColor = MaterialTheme.colorScheme.surface,
         ) {
             Column(Modifier.padding(horizontal = Dimens.PaddingMedium)) {
