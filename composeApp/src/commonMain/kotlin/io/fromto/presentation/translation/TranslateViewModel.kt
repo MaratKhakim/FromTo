@@ -125,7 +125,7 @@ class TranslateViewModel(
         viewModelScope.launch {
             updateSelectedLanguagesUseCase(language, _state.value.toLanguage)
         }
-        translate(_state.value.fromText)
+        clearText()
     }
 
     private fun selectToLanguage(language: Language) {
@@ -197,6 +197,7 @@ class TranslateViewModel(
 
     private fun clearText() {
         translationJob?.cancel()
+        textChangeChannel.trySend("")
         _state.update {
             it.copy(
                 fromText = "",

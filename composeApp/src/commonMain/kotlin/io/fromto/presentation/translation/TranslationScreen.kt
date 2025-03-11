@@ -77,8 +77,9 @@ fun TranslationScreen(
         TranslateTextField(
             modifier = Modifier.weight(2f),
             language = stringResource(getLanguageResource(state.toLanguage.name)),
-            text = state.toText,
+            text = if (state.isTranslating) state.fromText else state.toText,
             readOnly = true,
+            isTranslating = state.isTranslating,
             placeholder = stringResource(Res.string.translation_result),
             actionContent = {
                 IconButton(

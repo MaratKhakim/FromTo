@@ -12,6 +12,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import io.fromto.presentation.components.ShimmerPlaceholderForText
 import io.fromto.presentation.theme.Dimens
 
 @Composable
@@ -32,12 +37,15 @@ fun TranslateTextField(
     text: String,
     placeholder: String,
     readOnly: Boolean,
+    isTranslating: Boolean = false,
     onValueChange: (String) -> Unit = {},
     onFocusChanged: (Boolean) -> Unit = {},
     headerContent: (@Composable () -> Unit)? = null,
     actionContent: (@Composable () -> Unit)? = null,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    var measuredLineCount by remember { mutableStateOf(0) }
+
     Box(
         modifier = modifier
             .shadow(
@@ -77,6 +85,9 @@ fun TranslateTextField(
                 textStyle = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onSurface
                 ),
+                onTextLayout = { textLayoutResult ->
+                    measuredLineCount = textLayoutResult.lineCount
+                },
                 keyboardOptions = KeyboardOptions(
                     autoCorrectEnabled = false,
                     keyboardType = KeyboardType.Text,
@@ -89,15 +100,19 @@ fun TranslateTextField(
                 ),
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                 decorationBox = { innerTextField ->
-                    if (text.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    if (isTranslating) {
+                        ShimmerPlaceholderForText(fromText = text)
+                    } else {
+                        if (text.isEmpty()) {
+                            Text(
+                                text = placeholder,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                                )
                             )
-                        )
+                        }
+                        innerTextField()
                     }
-                    innerTextField()
                 }
             )
 
