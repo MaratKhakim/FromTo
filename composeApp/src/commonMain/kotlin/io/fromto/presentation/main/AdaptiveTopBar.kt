@@ -14,6 +14,7 @@ import fromto.composeapp.generated.resources.clear_history
 import fromto.composeapp.generated.resources.switch_localization
 import fromto.composeapp.generated.resources.trash
 import io.fromto.domain.model.AppLocale
+import io.fromto.presentation.navigation.Route
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -22,7 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 fun AdaptiveTopBar(
     activeLocale: AppLocale,
     expanded: Boolean,
-    destination: Destination,
+    destination: Route,
     onExpandedChange: (Boolean) -> Unit,
     onSelectLocale: (AppLocale) -> Unit,
     onClickLocalization: () -> Unit,
@@ -59,12 +60,12 @@ fun AdaptiveTopBar(
 }
 
 fun getTopBarActionsForRoute(
-    destination: Destination,
+    destination: Route,
     onLocalizationSwitch: () -> Unit,
     onClearHistory: () -> Unit
 ): List<TopBarAction> {
     return when (destination) {
-        Destination.Translate -> listOf(
+        Route.Translate -> listOf(
             TopBarAction(
                 icon = Res.drawable.change_language,
                 contentDescription = Res.string.switch_localization,
@@ -72,7 +73,7 @@ fun getTopBarActionsForRoute(
             )
         )
 
-        Destination.History -> listOf(
+        Route.History -> listOf(
             TopBarAction(
                 icon = Res.drawable.trash,
                 contentDescription = Res.string.clear_history,
