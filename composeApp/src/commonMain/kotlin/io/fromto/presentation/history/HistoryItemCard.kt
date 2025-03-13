@@ -1,6 +1,5 @@
 package io.fromto.presentation.history
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,7 +50,6 @@ fun HistoryItemCard(
         Column(
             modifier = Modifier
                 .padding(Dimens.PaddingMedium)
-                .animateContentSize()
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

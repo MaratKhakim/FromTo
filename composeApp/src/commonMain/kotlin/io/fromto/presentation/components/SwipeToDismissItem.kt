@@ -1,6 +1,5 @@
 package io.fromto.presentation.components
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +40,7 @@ fun SwipeToDismissItem(
     }
 
     SwipeToDismissBox(
-        modifier = modifier.animateContentSize(),
+        modifier = modifier,
         state = dismissState,
         backgroundContent = {
             Box(

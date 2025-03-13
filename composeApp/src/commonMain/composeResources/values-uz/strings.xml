@@ -55,8 +55,9 @@
     <string name="asturian">Asturiy</string>
     <string name="awadhi">Awadhi</string>
     <string name="central_aymara">Markaziy Aymara</string>
-    <string name="south_azerbaijani">Janubiy Azerbayjan</string>
-    <string name="north_azerbaijani">Shimoliy Azerbayjan</string>
+    <string name="south_azerbaijani">Janubiy Ozarbayjon</string>
+    <string name="azerbaijani">Ozarbayjon</string>
+    <string name="azerbaijani_cyrillic">Ozarbayjon (kirill)</string>
     <string name="bashkir">Bashkir</string>
     <string name="bambara">Bambara</string>
     <string name="balinese">Balines</string>
@@ -124,6 +125,7 @@
     <string name="central_kanuri_arabic">Markaziy Kanuri Arab</string>
     <string name="central_kanuri_latin">Markaziy Kanuri Lotin</string>
     <string name="kazakh">Qozoq</string>
+    <string name="kazakh_cyrillic">Qozoq (kirill)</string>
     <string name="kabiye">Kabiye</string>
     <string name="kabuverdianu">Kabuverdianu</string>
     <string name="khmer">Khmer</string>
@@ -199,6 +201,7 @@
     <string name="tosk_albanian">Tosk Alban</string>
     <string name="sardinian">Sardiniya</string>
     <string name="serbian">Serb</string>
+    <string name="serbian_cyrillic">Serb (kirill)</string>
     <string name="swati">Swati</string>
     <string name="sundanese">Sundani</string>
     <string name="swedish">Shved</string>
@@ -208,6 +211,7 @@
     <string name="tatar">Tatar</string>
     <string name="telugu">Telugu</string>
     <string name="tajik">Tojik</string>
+    <string name="tajik_cyrillic">Tojik (kirill)</string>
     <string name="tagalog">Tagalog</string>
     <string name="thai">Tai</string>
     <string name="tigrinya">Tigrinya</string>
@@ -217,6 +221,7 @@
     <string name="tswana">Tswana</string>
     <string name="tsonga">Tsonga</string>
     <string name="turkmen">Turkman</string>
+    <string name="turkmen_cyrillic">Turkmen (kirill)</string>
     <string name="tumbuka">Tumbuka</string>
     <string name="turkish">Turk</string>
     <string name="twi">Twi</string>

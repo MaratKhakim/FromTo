@@ -56,7 +56,8 @@
     <string name="awadhi">Awadhi</string>
     <string name="central_aymara">Central Aymara</string>
     <string name="south_azerbaijani">South Azerbaijani</string>
-    <string name="north_azerbaijani">North Azerbaijani</string>
+    <string name="azerbaijani">Azerbaijani</string>
+    <string name="azerbaijani_cyrillic">Azerbaijani Cyrillic</string>
     <string name="bashkir">Bashkir</string>
     <string name="bambara">Bambara</string>
     <string name="balinese">Balinese</string>
@@ -124,6 +125,7 @@
     <string name="central_kanuri_arabic">Central Kanuri Arabic</string>
     <string name="central_kanuri_latin">Central Kanuri Latin</string>
     <string name="kazakh">Kazakh</string>
+    <string name="kazakh_cyrillic">Kazakh Cyrillic</string>
     <string name="kabiye">Kabiye</string>
     <string name="kabuverdianu">Kabuverdianu</string>
     <string name="khmer">Khmer</string>
@@ -199,6 +201,7 @@
     <string name="tosk_albanian">Tosk Albanian</string>
     <string name="sardinian">Sardinian</string>
     <string name="serbian">Serbian</string>
+    <string name="serbian_cyrillic">Serbian Cyrillic</string>
     <string name="swati">Swati</string>
     <string name="sundanese">Sundanese</string>
     <string name="swedish">Swedish</string>
@@ -208,6 +211,7 @@
     <string name="tatar">Tatar</string>
     <string name="telugu">Telugu</string>
     <string name="tajik">Tajik</string>
+    <string name="tajik_cyrillic">Tajik Cyrillic</string>
     <string name="tagalog">Tagalog</string>
     <string name="thai">Thai</string>
     <string name="tigrinya">Tigrinya</string>
@@ -217,6 +221,7 @@
     <string name="tswana">Tswana</string>
     <string name="tsonga">Tsonga</string>
     <string name="turkmen">Turkmen</string>
+    <string name="turkmen_cyrillic">Turkmen Cyrillic</string>
     <string name="tumbuka">Tumbuka</string>
     <string name="turkish">Turkish</string>
     <string name="twi">Twi</string>

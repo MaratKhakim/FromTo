@@ -56,7 +56,8 @@
     <string name="awadhi">Авадхи</string>
     <string name="central_aymara">Центральная аймара</string>
     <string name="south_azerbaijani">Южноазербайджанский</string>
-    <string name="north_azerbaijani">Северноазербайджанский</string>
+    <string name="azerbaijani">Азербайджанский</string>
+    <string name="azerbaijani_cyrillic">Азербайджанский (кириллица)</string>
     <string name="bashkir">Башкирский</string>
     <string name="bambara">Бамбарский</string>
     <string name="balinese">Бали</string>
@@ -124,6 +125,7 @@
     <string name="central_kanuri_arabic">Центральный канури (арабское письмо)</string>
     <string name="central_kanuri_latin">Центральный канури (латиница)</string>
     <string name="kazakh">Казахский</string>
+    <string name="kazakh_cyrillic">Казахский (кириллица)</string>
     <string name="kabiye">Кабийэ</string>
     <string name="kabuverdianu">Кабувердиану</string>
     <string name="khmer">Кхмерский</string>
@@ -199,6 +201,7 @@
     <string name="tosk_albanian">Тоский албанский</string>
     <string name="sardinian">Сардинский</string>
     <string name="serbian">Сербский</string>
+    <string name="serbian_cyrillic">Сербский (кириллица)</string>
     <string name="swati">Свати</string>
     <string name="sundanese">Сунданский</string>
     <string name="swedish">Шведский</string>
@@ -208,6 +211,7 @@
     <string name="tatar">Татарский</string>
     <string name="telugu">Телугу</string>
     <string name="tajik">Таджикский</string>
+    <string name="tajik_cyrillic">Таджикский (кириллица)</string>
     <string name="tagalog">Тагалог</string>
     <string name="thai">Тайский</string>
     <string name="tigrinya">Тигринья</string>
@@ -217,6 +221,7 @@
     <string name="tswana">Цвана</string>
     <string name="tsonga">Цонга</string>
     <string name="turkmen">Туркменский</string>
+    <string name="turkmen_cyrillic">Туркменский (кириллица)</string>
     <string name="tumbuka">Тумбука</string>
     <string name="turkish">Турецкий</string>
     <string name="twi">Тви</string>

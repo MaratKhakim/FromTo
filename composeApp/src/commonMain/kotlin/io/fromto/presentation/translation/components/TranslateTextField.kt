@@ -96,6 +96,7 @@ fun TranslateTextField(
                 keyboardActions = KeyboardActions(
                     onGo = {
                         keyboardController?.hide()
+                        onFocusChanged(false)
                     }
                 ),
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),

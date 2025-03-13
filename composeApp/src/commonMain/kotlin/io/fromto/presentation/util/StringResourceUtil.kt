@@ -11,6 +11,8 @@ import fromto.composeapp.generated.resources.assamese
 import fromto.composeapp.generated.resources.asturian
 import fromto.composeapp.generated.resources.awadhi
 import fromto.composeapp.generated.resources.ayacucho_quechua
+import fromto.composeapp.generated.resources.azerbaijani
+import fromto.composeapp.generated.resources.azerbaijani_cyrillic
 import fromto.composeapp.generated.resources.balinese
 import fromto.composeapp.generated.resources.bambara
 import fromto.composeapp.generated.resources.banjar_arabic_script
@@ -89,6 +91,7 @@ import fromto.composeapp.generated.resources.karakalpak_cyrillic
 import fromto.composeapp.generated.resources.kashmiri_arabic_script
 import fromto.composeapp.generated.resources.kashmiri_devanagari_script
 import fromto.composeapp.generated.resources.kazakh
+import fromto.composeapp.generated.resources.kazakh_cyrillic
 import fromto.composeapp.generated.resources.khmer
 import fromto.composeapp.generated.resources.kikongo
 import fromto.composeapp.generated.resources.kikuyu
@@ -125,7 +128,6 @@ import fromto.composeapp.generated.resources.mossi
 import fromto.composeapp.generated.resources.najdi_arabic
 import fromto.composeapp.generated.resources.nepali
 import fromto.composeapp.generated.resources.nigerian_fulfulde
-import fromto.composeapp.generated.resources.north_azerbaijani
 import fromto.composeapp.generated.resources.north_levantine_arabic
 import fromto.composeapp.generated.resources.northern_kurdish
 import fromto.composeapp.generated.resources.northern_sotho
@@ -150,6 +152,7 @@ import fromto.composeapp.generated.resources.santali
 import fromto.composeapp.generated.resources.sardinian
 import fromto.composeapp.generated.resources.scottish_gaelic
 import fromto.composeapp.generated.resources.serbian
+import fromto.composeapp.generated.resources.serbian_cyrillic
 import fromto.composeapp.generated.resources.shan
 import fromto.composeapp.generated.resources.shona
 import fromto.composeapp.generated.resources.sicilian
@@ -175,6 +178,7 @@ import fromto.composeapp.generated.resources.swedish
 import fromto.composeapp.generated.resources.tagalog
 import fromto.composeapp.generated.resources.taizzi_adeni_arabic
 import fromto.composeapp.generated.resources.tajik
+import fromto.composeapp.generated.resources.tajik_cyrillic
 import fromto.composeapp.generated.resources.tamasheq_latin
 import fromto.composeapp.generated.resources.tamasheq_tifinagh
 import fromto.composeapp.generated.resources.tamil
@@ -190,6 +194,7 @@ import fromto.composeapp.generated.resources.tumbuka
 import fromto.composeapp.generated.resources.tunisian_arabic
 import fromto.composeapp.generated.resources.turkish
 import fromto.composeapp.generated.resources.turkmen
+import fromto.composeapp.generated.resources.turkmen_cyrillic
 import fromto.composeapp.generated.resources.twi
 import fromto.composeapp.generated.resources.ukrainian
 import fromto.composeapp.generated.resources.umbundu
@@ -238,7 +243,8 @@ fun getLanguageResource(locale: String): StringResource {
         "awadhi" -> Res.string.awadhi
         "central_aymara" -> Res.string.central_aymara
         "south_azerbaijani" -> Res.string.south_azerbaijani
-        "north_azerbaijani" -> Res.string.north_azerbaijani
+        "azerbaijani" -> Res.string.azerbaijani
+        "azerbaijani_cyrillic" -> Res.string.azerbaijani_cyrillic
         "bashkir" -> Res.string.bashkir
         "bambara" -> Res.string.bambara
         "balinese" -> Res.string.balinese
@@ -306,6 +312,7 @@ fun getLanguageResource(locale: String): StringResource {
         "central_kanuri_arabic" -> Res.string.central_kanuri_arabic
         "central_kanuri_latin" -> Res.string.central_kanuri_latin
         "kazakh" -> Res.string.kazakh
+        "kazakh_cyrillic" -> Res.string.kazakh_cyrillic
         "kabiye" -> Res.string.kabiye
         "kabuverdianu" -> Res.string.kabuverdianu
         "khmer" -> Res.string.khmer
@@ -381,6 +388,7 @@ fun getLanguageResource(locale: String): StringResource {
         "tosk_albanian" -> Res.string.tosk_albanian
         "sardinian" -> Res.string.sardinian
         "serbian" -> Res.string.serbian
+        "serbian_cyrillic" -> Res.string.serbian_cyrillic
         "swati" -> Res.string.swati
         "sundanese" -> Res.string.sundanese
         "swedish" -> Res.string.swedish
@@ -390,6 +398,7 @@ fun getLanguageResource(locale: String): StringResource {
         "tatar" -> Res.string.tatar
         "telugu" -> Res.string.telugu
         "tajik" -> Res.string.tajik
+        "tajik_cyrillic" -> Res.string.tajik_cyrillic
         "tagalog" -> Res.string.tagalog
         "thai" -> Res.string.thai
         "tigrinya" -> Res.string.tigrinya
@@ -399,6 +408,7 @@ fun getLanguageResource(locale: String): StringResource {
         "tswana" -> Res.string.tswana
         "tsonga" -> Res.string.tsonga
         "turkmen" -> Res.string.turkmen
+        "turkmen_cyrillic" -> Res.string.turkmen_cyrillic
         "tumbuka" -> Res.string.tumbuka
         "turkish" -> Res.string.turkish
         "twi" -> Res.string.twi

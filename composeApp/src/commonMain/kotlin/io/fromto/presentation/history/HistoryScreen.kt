@@ -69,8 +69,7 @@ private fun HistoryList(
             SwipeToDismissItem(
                 modifier = Modifier
                     .shadow(elevation = Dimens.Elevation, shape = MaterialTheme.shapes.large)
-                    .clip(MaterialTheme.shapes.large)
-                    .animateItem(fadeOutSpec = null),
+                    .clip(MaterialTheme.shapes.large),
                 item = item,
                 onDismiss = onDelete
             ) {

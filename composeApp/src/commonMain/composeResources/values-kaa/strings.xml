@@ -55,8 +55,9 @@
     <string name="asturian">Asturiy</string>
     <string name="awadhi">Awadhi</string>
     <string name="central_aymara">Orta Aymara</string>
-    <string name="south_azerbaijani">Qubla Ozarbayjon</string>
-    <string name="north_azerbaijani">Arqa Ozarbayjon</string>
+    <string name="south_azerbaijani">Qubla Ázerbayjan</string>
+    <string name="azerbaijani">Ázerbayjan</string>
+    <string name="azerbaijani_cyrillic">Ázerbayjan (kirill)</string>
     <string name="bashkir">Bashkir</string>
     <string name="bambara">Bambara</string>
     <string name="balinese">Balines</string>
@@ -124,6 +125,7 @@
     <string name="central_kanuri_arabic">Orta Kanuri Arab</string>
     <string name="central_kanuri_latin">Orta Kanuri Latın</string>
     <string name="kazakh">Qazaq</string>
+    <string name="kazakh_cyrillic">Qazaq (kirill)</string>
     <string name="kabiye">Kabiye</string>
     <string name="kabuverdianu">Kabuverdianu</string>
     <string name="khmer">Khmer</string>
@@ -199,6 +201,7 @@
     <string name="tosk_albanian">Tosk Alban</string>
     <string name="sardinian">Sardiniya</string>
     <string name="serbian">Serb</string>
+    <string name="serbian_cyrillic">Serb (kirill)</string>
     <string name="swati">Swati</string>
     <string name="sundanese">Sundani</string>
     <string name="swedish">Shved</string>
@@ -207,7 +210,8 @@
     <string name="tamil">Tamil</string>
     <string name="tatar">Tatar</string>
     <string name="telugu">Telugu</string>
-    <string name="tajik">Tajik</string>
+    <string name="tajik">Tájik</string>
+    <string name="tajik_cyrillic">Tájik (kirill)</string>
     <string name="tagalog">Tagalog</string>
     <string name="thai">Tai</string>
     <string name="tigrinya">Tigrinya</string>
@@ -216,9 +220,10 @@
     <string name="tok_pisin">Tok Pisin</string>
     <string name="tswana">Tswana</string>
     <string name="tsonga">Tsonga</string>
-    <string name="turkmen">Turkmen</string>
+    <string name="turkmen">Túrkmen</string>
+    <string name="turkmen_cyrillic">Túrkmen (kirill)</string>
     <string name="tumbuka">Tumbuka</string>
-    <string name="turkish">Turk</string>
+    <string name="turkish">Túrk</string>
     <string name="twi">Twi</string>
     <string name="central_atlas_tamazight">Orta Atlas Tamazight</string>
     <string name="uyghur">Uyǵır</string>
