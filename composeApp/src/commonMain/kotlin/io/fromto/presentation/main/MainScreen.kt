@@ -81,6 +81,7 @@ fun MainScreen() {
         bottomBar = {
             BottomNavGraph(
                 currentDestination = currentDestination,
+                locale = translateState.locale,
                 onRouteChange = {
                     navController.navigateWithPopUp(it)
                 }

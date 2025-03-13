@@ -107,7 +107,12 @@ class TranslateViewModel(
     }
 
     private fun enterText(text: String) {
-        _state.update { it.copy(fromText = text) }
+        _state.update {
+            it.copy(
+                fromText = text,
+                toText = if (text.isBlank()) "" else it.toText,
+            )
+        }
         viewModelScope.launch {
             textChangeChannel.send(text)
         }
@@ -158,7 +163,14 @@ class TranslateViewModel(
     }
 
     private fun translate(text: String) {
-        if (state.value.isTranslating || text.isBlank()) {
+        if (state.value.isTranslating) {
+            return
+        }
+
+        if (text.isBlank()) {
+            _state.update {
+                it.copy(toText = "")
+            }
             return
         }
 

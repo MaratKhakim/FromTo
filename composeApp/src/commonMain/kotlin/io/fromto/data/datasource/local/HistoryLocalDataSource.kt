@@ -9,4 +9,5 @@ interface HistoryLocalDataSource {
     fun historyStream(context: CoroutineContext): Flow<List<HistoryItem>>
     suspend fun deleteTranslation(id: String)
     suspend fun deleteAllTranslations()
+    suspend fun deleteOldHistory(limit: Long)
 }

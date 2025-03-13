@@ -16,12 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import io.fromto.domain.model.AppLocale
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun BottomNavGraph(
     currentDestination: NavDestination?,
+    locale: AppLocale,
     onRouteChange: (Route) -> Unit
 ) {
     val routes = listOf(Route.Translate, Route.History)
@@ -45,7 +47,7 @@ fun BottomNavGraph(
         routes.forEach { route ->
             NavigationBarItem(
                 icon = { Icon(painterResource(route.icon), null) },
-                label = { Text(stringResource(route.label)) },
+                label = { Label(stringResource(route.label), locale = locale) },
                 selected = currentDestination?.hierarchy?.any {
                     it.getRoute() == route
                 } == true,
@@ -62,4 +64,16 @@ fun BottomNavGraph(
             )
         }
     }
+}
+
+/**
+Bottom navigation label on iOS is not being updated correctly when locale is changed
+TODO: Find a better way to do this
+ */
+@Composable
+private fun Label(
+    text: String,
+    locale: AppLocale
+) {
+    Text(text = text)
 }

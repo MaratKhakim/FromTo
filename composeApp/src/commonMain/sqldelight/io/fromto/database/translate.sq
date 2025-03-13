@@ -29,3 +29,11 @@ DELETE FROM historyEntity WHERE id = ?;
 
 deleteAll:
 DELETE FROM historyEntity;
+
+deleteOldHistory:
+DELETE FROM historyEntity
+WHERE id NOT IN (
+  SELECT id FROM historyEntity
+  ORDER BY timestamp DESC
+  LIMIT :limit
+);

@@ -41,4 +41,8 @@ class SqlHistoryDataSource(
     override suspend fun deleteAllTranslations() {
         queries.deleteAll()
     }
+
+    override suspend fun deleteOldHistory(limit: Long) {
+        queries.deleteOldHistory(limit)
+    }
 }

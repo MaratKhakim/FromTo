@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import fromto.composeapp.generated.resources.Res
 import fromto.composeapp.generated.resources.error_delete_error
 import io.fromto.domain.model.HistoryItem
@@ -67,6 +68,7 @@ private fun HistoryList(
         items(historyItems) { item ->
             SwipeToDismissItem(
                 modifier = Modifier
+                    .shadow(elevation = Dimens.Elevation, shape = MaterialTheme.shapes.large)
                     .clip(MaterialTheme.shapes.large)
                     .animateItem(fadeOutSpec = null),
                 item = item,

@@ -55,6 +55,6 @@ val historyModule = module {
     singleOf(::GetHistoryUseCase)
     singleOf(::DeleteHistoryUseCase)
     singleOf(::ClearHistoryUseCase)
-    singleOf(::SaveHistoryUseCase)
+    single { SaveHistoryUseCase(get()) }
     viewModelOf(::HistoryViewModel)
 }

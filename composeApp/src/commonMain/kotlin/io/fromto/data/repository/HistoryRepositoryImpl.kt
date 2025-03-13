@@ -20,6 +20,10 @@ class HistoryRepositoryImpl(
         dataSource.deleteAllTranslations()
     }
 
+    override suspend fun deleteOldTranslations(limit: Long) {
+        dataSource.deleteOldHistory(limit)
+    }
+
     override fun historyStream(context: CoroutineContext): Flow<List<HistoryItem>> {
         return dataSource.historyStream(context)
     }
