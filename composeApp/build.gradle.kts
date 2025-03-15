@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 kotlin {
@@ -57,6 +59,9 @@ kotlin {
             implementation(libs.multiplatform.settings.no.arg)
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines.extensions)
+
+            api(libs.gitlive.firebase.kotlin.crashlytics)
+            implementation(libs.gitlive.firebase.analytics)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
