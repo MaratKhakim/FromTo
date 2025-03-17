@@ -20,6 +20,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import fromto.composeapp.generated.resources.Res
 import fromto.composeapp.generated.resources.text_copied
+import io.fromto.analytics.Buttons
+import io.fromto.analytics.LocalAnalytics
+import io.fromto.analytics.ScreenName
+import io.fromto.analytics.buttonClick
+import io.fromto.analytics.itemSelect
 import io.fromto.presentation.history.HistoryEvent
 import io.fromto.presentation.history.HistoryScreen
 import io.fromto.presentation.history.HistoryViewModel
@@ -37,6 +42,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MainScreen() {
     val clipboardManager = LocalClipboardManager.current
+    val analytics = LocalAnalytics.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val textCopiedConfirmation = stringResource(Res.string.text_copied)
@@ -66,14 +72,22 @@ fun MainScreen() {
                 destination = currentDestination?.getRoute() ?: Route.Translate,
                 onClickLocalization = {
                     isLocalizationMenuOpen = true
+                    analytics.buttonClick(ScreenName.TRANSLATE, Buttons.LOCALIZE)
                 },
                 onSelectLocale = {
                     isLocalizationMenuOpen = false
                     translateViewModel.onEvent(TranslateEvent.SelectLocale(it))
+                    analytics.itemSelect(
+                        screen = ScreenName.TRANSLATE,
+                        category = "locale",
+                        itemId = it.name,
+                        itemName = it.name,
+                    )
                 },
                 onClearHistory = {
                     if (historyState.items.isNotEmpty()) {
                         showConfirmDialog = true
+                        analytics.buttonClick(ScreenName.HISTORY, Buttons.CLEAR_HISTORY)
                     }
                 }
             )
@@ -136,6 +150,7 @@ fun MainScreen() {
                 onConfirm = {
                     historyViewModel.onEvent(HistoryEvent.DeleteAllItems)
                     showConfirmDialog = false
+                    analytics.buttonClick(ScreenName.HISTORY, Buttons.DELETE_ALL_HISTORY)
                 },
                 onDismiss = { showConfirmDialog = false }
             )

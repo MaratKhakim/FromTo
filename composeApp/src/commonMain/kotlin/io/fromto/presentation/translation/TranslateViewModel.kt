@@ -2,6 +2,7 @@ package io.fromto.presentation.translation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.fromto.analytics.Analytics
 import io.fromto.domain.model.AppLocale
 import io.fromto.domain.model.HistoryItem
 import io.fromto.domain.model.Language
@@ -36,9 +37,10 @@ class TranslateViewModel(
     private val translateUseCase: TranslateUseCase,
     private val changeLocaleUseCase: ChangeLocaleUseCase,
     private val saveHistoryUseCase: SaveHistoryUseCase,
-    getSelectedLanguagesUseCase: GetSelectedLanguagesUseCase,
     private val updateSelectedLanguagesUseCase: UpdateSelectedLanguagesUseCase,
-    getCurrentLocaleUseCase: GetCurrentLocaleUseCase
+    private val analytics: Analytics,
+    getSelectedLanguagesUseCase: GetSelectedLanguagesUseCase,
+    getCurrentLocaleUseCase: GetCurrentLocaleUseCase,
 ) : ViewModel() {
 
     private var translationJob: Job? = null
@@ -201,6 +203,7 @@ class TranslateViewModel(
                 _state.update {
                     it.copy(error = error)
                 }
+                analytics.logError(error)
             }
 
             _state.update { it.copy(isTranslating = false) }
@@ -265,6 +268,6 @@ class TranslateViewModel(
     companion object {
         private const val TRANSLATE_DEBOUNCE_TIME = 300L
         private const val SAVE_DEBOUNCE_TIME = 500L
-        private const val MIN_SAVE_LENGTH = 3
+        private const val MIN_SAVE_LENGTH = 2
     }
 }

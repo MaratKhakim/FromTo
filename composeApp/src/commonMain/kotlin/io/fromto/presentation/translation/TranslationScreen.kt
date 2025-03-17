@@ -19,12 +19,13 @@ import fromto.composeapp.generated.resources.enter_text
 import fromto.composeapp.generated.resources.error_network_unavailable
 import fromto.composeapp.generated.resources.error_serialization_error
 import fromto.composeapp.generated.resources.error_server_error
-import fromto.composeapp.generated.resources.error_timeout
-import fromto.composeapp.generated.resources.error_too_many_requests
 import fromto.composeapp.generated.resources.error_unknown
 import fromto.composeapp.generated.resources.translation_result
+import io.fromto.analytics.LocalAnalytics
+import io.fromto.analytics.ScreenName
 import io.fromto.domain.util.TranslateError
 import io.fromto.presentation.components.ErrorMessage
+import io.fromto.presentation.components.TrackScreenViewEvent
 import io.fromto.presentation.theme.Dimens
 import io.fromto.presentation.translation.components.LanguageSelector
 import io.fromto.presentation.translation.components.TranslateTextField
@@ -38,6 +39,10 @@ fun TranslationScreen(
     onCopyClick: (String) -> Unit,
     onEvent: (TranslateEvent) -> Unit
 ) {
+    TrackScreenViewEvent(
+        screenName = ScreenName.TRANSLATE,
+        analytics = LocalAnalytics.current
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -125,11 +130,9 @@ fun TranslationScreen(
 @Composable
 fun TranslateError.toMessage(): String {
     return when (this) {
-        TranslateError.NetworkUnavailable -> stringResource(Res.string.error_network_unavailable)
-        TranslateError.ServerError -> stringResource(Res.string.error_server_error)
-        TranslateError.Timeout -> stringResource(Res.string.error_timeout)
-        TranslateError.TooManyRequests -> stringResource(Res.string.error_too_many_requests)
-        TranslateError.SerializationError -> stringResource(Res.string.error_serialization_error)
-        TranslateError.UnknownError -> stringResource(Res.string.error_unknown)
+        is TranslateError.NetworkUnavailable -> stringResource(Res.string.error_network_unavailable)
+        is TranslateError.ServerError -> stringResource(Res.string.error_server_error)
+        is TranslateError.SerializationError -> stringResource(Res.string.error_serialization_error)
+        is TranslateError.UnknownError -> stringResource(Res.string.error_unknown)
     }
 }

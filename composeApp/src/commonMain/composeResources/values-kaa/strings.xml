@@ -12,8 +12,6 @@
     <string name="text_copied">Tekst nusqa alındı</string>
     <string name="error_network_unavailable">Internet baylanıstı tekserip ko'riń.</string>
     <string name="error_server_error">Awdarma waqtında server qáteligi boldı.</string>
-    <string name="error_timeout">Awdarma sorawı waqtınan shıqtı. Qaytalanıp ko'riń.</string>
-    <string name="error_too_many_requests">Artiqsha sorawlar. Kútip turıp, qayta tekserip ko'riń.</string>
     <string name="error_serialization_error">Awdarma qayta islewde qátelik boldı.</string>
     <string name="error_unknown">Belgisiz qátelik júz berdi.</string>
     <string name="error">Qátelik</string>

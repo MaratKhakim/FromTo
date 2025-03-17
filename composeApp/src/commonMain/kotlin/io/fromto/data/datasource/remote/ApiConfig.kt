@@ -1,4 +1,4 @@
-package io.fromto.config
+package io.fromto.data.datasource.remote
 
 object ApiConfig {
     private const val BASE_URL = "https://api.from-to.uz"

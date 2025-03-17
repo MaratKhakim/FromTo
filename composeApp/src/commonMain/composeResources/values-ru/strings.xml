@@ -12,8 +12,6 @@
     <string name="text_copied">Текст скопирован</string>
     <string name="error_network_unavailable">Нет подключения к сети. Проверьте соединение.</string>
     <string name="error_server_error">Произошла ошибка сервера при переводе.</string>
-    <string name="error_timeout">Время запроса на перевод истекло. Попробуйте еще раз.</string>
-    <string name="error_too_many_requests">Слишком много запросов. Подождите и попробуйте снова.</string>
     <string name="error_serialization_error">Произошла ошибка при обработке перевода.</string>
     <string name="error_unknown">Произошла неизвестная ошибка.</string>
     <string name="error">Ошибка</string>

@@ -12,8 +12,6 @@
     <string name="text_copied">Matn nusxa olindi</string>
     <string name="error_network_unavailable">Internetga ulanmagan. Ulanishni tekshiring.</string>
     <string name="error_server_error">Tarjima paytida server xatosi yuz berdi.</string>
-    <string name="error_timeout">Tarjima soʻrovi muddati tugadi. Qayta urinib koʻring.</string>
-    <string name="error_too_many_requests">Juda koʻp soʻrovlar. Iltimos, kuting va qayta urinib koʻring.</string>
     <string name="error_serialization_error">Tarjimani qayta ishlashda xato yuz berdi.</string>
     <string name="error_unknown">Nomaʼlum xato yuz berdi.</string>
     <string name="error">Xato</string>

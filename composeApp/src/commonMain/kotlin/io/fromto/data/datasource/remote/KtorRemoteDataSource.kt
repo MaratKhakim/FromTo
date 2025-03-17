@@ -1,6 +1,5 @@
 package io.fromto.data.datasource.remote
 
-import io.fromto.config.ApiConfig
 import io.fromto.data.dto.TranslateResponseDto
 import io.fromto.data.mapper.toDto
 import io.fromto.data.remote.safeCall

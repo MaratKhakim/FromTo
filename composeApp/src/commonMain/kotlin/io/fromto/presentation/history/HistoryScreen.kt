@@ -13,12 +13,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import fromto.composeapp.generated.resources.Res
 import fromto.composeapp.generated.resources.error_delete_error
+import io.fromto.analytics.LocalAnalytics
+import io.fromto.analytics.ScreenName
+import io.fromto.analytics.itemSelect
 import io.fromto.domain.model.HistoryItem
 import io.fromto.domain.model.Language
 import io.fromto.domain.util.HistoryError
 import io.fromto.presentation.components.ErrorMessage
 import io.fromto.presentation.components.Loading
 import io.fromto.presentation.components.SwipeToDismissItem
+import io.fromto.presentation.components.TrackScreenViewEvent
 import io.fromto.presentation.theme.Dimens
 import io.fromto.presentation.util.getLanguageResource
 import org.jetbrains.compose.resources.stringResource
@@ -31,6 +35,10 @@ fun HistoryScreen(
     onBack: () -> Unit,
     onItemClicked: (HistoryItem) -> Unit
 ) {
+    TrackScreenViewEvent(
+        screenName = ScreenName.HISTORY,
+        analytics = LocalAnalytics.current
+    )
     when {
         state.isLoading -> Loading()
         state.items.isEmpty() -> EmptyHistoryComponent(onStartTranslating = onBack)
@@ -60,6 +68,7 @@ private fun HistoryList(
     onItemClicked: (HistoryItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val analytics = LocalAnalytics.current
     LazyColumn(
         modifier = modifier,
         state = rememberLazyListState(),
@@ -73,13 +82,22 @@ private fun HistoryList(
                 item = item,
                 onDismiss = onDelete
             ) {
+                val sourceLang = Language.fromCode(item.sourceLang).name
+                val targetLang = Language.fromCode(item.targetLang).name
                 HistoryItemCard(
                     sourceText = item.sourceText,
                     translatedText = item.translatedText,
-                    fromLanguage = stringResource(getLanguageResource(Language.fromCode(item.sourceLang).name)),
-                    toLanguage = stringResource(getLanguageResource(Language.fromCode(item.targetLang).name)),
+                    fromLanguage = stringResource(getLanguageResource(sourceLang)),
+                    toLanguage = stringResource(getLanguageResource(targetLang)),
                     timestamp = item.timestamp,
-                    onClick = { onItemClicked(item) }
+                    onClick = {
+                        analytics.itemSelect(
+                            screen = ScreenName.HISTORY,
+                            category = "history_item",
+                            itemId = "${sourceLang}-${targetLang}",
+                        )
+                        onItemClicked(item)
+                    }
                 )
             }
         }
