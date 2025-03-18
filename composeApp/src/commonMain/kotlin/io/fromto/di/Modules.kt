@@ -1,5 +1,6 @@
 package io.fromto.di
 
+import com.russhwolf.settings.Settings
 import io.fromto.analytics.Analytics
 import io.fromto.analytics.FirebaseAnalyticsHelper
 import io.fromto.data.datasource.local.HistoryLocalDataSource
@@ -11,6 +12,7 @@ import io.fromto.data.repository.HistoryRepositoryImpl
 import io.fromto.data.repository.LanguageSelectorRepositoryImpl
 import io.fromto.data.repository.LocalizationRepositoryImpl
 import io.fromto.data.repository.TranslateRepositoryImpl
+import io.fromto.data.util.DeviceIdentifierProviderImpl
 import io.fromto.database.TranslateDatabase
 import io.fromto.domain.repository.HistoryRepository
 import io.fromto.domain.repository.LanguageSelectorRepository
@@ -25,6 +27,7 @@ import io.fromto.domain.usecase.GetSelectedLanguagesUseCase
 import io.fromto.domain.usecase.SaveHistoryUseCase
 import io.fromto.domain.usecase.TranslateUseCase
 import io.fromto.domain.usecase.UpdateSelectedLanguagesUseCase
+import io.fromto.domain.util.DeviceIdentifierProvider
 import io.fromto.presentation.history.HistoryViewModel
 import io.fromto.presentation.translation.TranslateViewModel
 import org.koin.core.module.Module
@@ -36,7 +39,9 @@ import org.koin.dsl.module
 expect val platformModule: Module
 
 val sharedModule = module {
-    single { HttpClientFactory.create(get()) }
+    singleOf(::Settings)
+    singleOf(::DeviceIdentifierProviderImpl).bind<DeviceIdentifierProvider>()
+    single { HttpClientFactory.create(get(), get()) }
     singleOf(::KtorRemoteDataSource).bind<RemoteDataSource>()
     singleOf(::TranslateRepositoryImpl).bind<TranslateRepository>()
     singleOf(::LocalizationRepositoryImpl).bind<LocalizationRepository>()

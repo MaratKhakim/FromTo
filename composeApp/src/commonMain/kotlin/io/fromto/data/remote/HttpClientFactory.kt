@@ -1,5 +1,6 @@
 package io.fromto.data.remote
 
+import io.fromto.domain.util.DeviceIdentifierProvider
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -8,13 +9,17 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
-    fun create(engine: HttpClientEngine): HttpClient {
+    fun create(
+        engine: HttpClientEngine,
+        deviceIdentifierProvider: DeviceIdentifierProvider
+    ): HttpClient {
         return HttpClient(engine) {
             install(ContentNegotiation) {
                 json(
@@ -36,6 +41,7 @@ object HttpClientFactory {
                 level = LogLevel.ALL
             }
             defaultRequest {
+                header("X-Device-Id", deviceIdentifierProvider.getDeviceId())
                 contentType(ContentType.Application.Json)
             }
         }
